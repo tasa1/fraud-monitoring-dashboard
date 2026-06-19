@@ -3,6 +3,7 @@ import { useOrders } from "./hooks/useOrders";
 import { OrderTable } from "./components/OrderTable";
 import { OrderFilters } from "./components/OrderFilters";
 import type { StatusFilter } from "./components/OrderFilters";
+import { OrderDetailModal } from "./components/OrderDetailModal";
 import { filterOrders } from "./lib/filterOrders";
 import type { Order } from "./types/order";
 
@@ -57,11 +58,12 @@ function App() {
           </>
         )}
 
-        {/* 詳細表示は仮実装。Day5でモーダル化して承認/拒否ボタンを追加する */}
+        {/* 行クリック時に詳細モーダルを表示。承認/拒否を押すとFirestoreが更新される */}
         {selectedOrder && (
-          <div className="mt-4 p-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-600">
-            選択中: {selectedOrder.orderNumber}（詳細モーダルはDay5で実装予定）
-          </div>
+          <OrderDetailModal
+            order={selectedOrder}
+            onClose={() => setSelectedOrder(null)}
+          />
         )}
       </main>
     </div>
