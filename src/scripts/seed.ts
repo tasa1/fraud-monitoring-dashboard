@@ -1,10 +1,5 @@
-/**
- * Firestoreにダミーの注文データを投入するスクリプト。
- * 実行前に .env にFirebaseの設定値を入れておくこと。
- *
- * 実行方法:
- *   npx tsx src/scripts/seed.ts
- */
+//Firestoreにダミーの注文データを投入するスクリプト。
+
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import * as dotenv from "dotenv";
