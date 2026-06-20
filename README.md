@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# Fraud Monitoring Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+不正注文のリスクを確認して、承認・拒否を管理するWebアプリです。
 
-Currently, two official plugins are available:
+## デモ
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+https://fraud-monitoring-dashboard.vercel.app/
 
-## React Compiler
+## 使った技術
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React / TypeScript
+- Firebase（Firestore）
+- Tailwind CSS
+- Vite
+- Vercel（デプロイ）
 
-## Expanding the ESLint configuration
+## 機能
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 注文一覧の表示
+- 顧客名・注文番号での検索
+- ステータスでの絞り込み（要確認・承認済み・拒否）
+- 注文詳細の表示
+- 承認・拒否ボタンでステータスを更新
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 工夫した点
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+データの取得にカスタムフック（useOrders）を使い、App.tsxにロジックを書きすぎないようにしました。また検索とフィルタの絞り込み処理はuseMemoを使って、毎回再計算されないようにしました。
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 苦労した点
+
+`.env`ファイルの値の貼り方を間違えていて、Firestoreに接続できないエラーが出続けました。`.env`ファイルをGitにコミットしないよう`.gitignore`に追加する必要があることも、このとき初めて理解しました。
+
+## 起動方法
+
+```bash
+# インストール
+npm install
+
+# .env.exampleをコピーしてFirebaseの設定値を入力
+cp .env.example .env
+
+# ダミーデータの投入
+npm run seed
+
+# 開発サーバーの起動
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 今後やりたいこと
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- ログイン機能（Firebase Authentication）
+- 承認・拒否した履歴の記録
+- リスクスコアが高い順でのソート
