@@ -21,7 +21,7 @@ export function OrderDetailModal({ order, onClose }: OrderDetailModalProps) {
       await updateStatus(order.id, status);
       onClose();
     } catch {
-      // エラー内容はuseUpdateOrderStatus側のerrorで表示するため、ここでは何もしない
+      // エラー内容はuseUpdateOrderStatus側のerrorで表示する.
     } finally {
       setPendingAction(null);
     }
