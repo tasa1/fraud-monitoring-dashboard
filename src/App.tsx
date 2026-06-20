@@ -34,13 +34,19 @@ function App() {
 
       <main className="max-w-6xl mx-auto px-6 py-8">
         {loading && (
-          <p className="text-slate-500 text-sm">読み込み中...</p>
+          <div className="space-y-3">
+            <div className="h-10 bg-slate-200 rounded-lg animate-pulse w-full sm:w-2/3" />
+            <div className="h-64 bg-slate-200 rounded-lg animate-pulse" />
+          </div>
         )}
 
         {error && (
-          <p className="text-red-600 text-sm">
-            データの取得に失敗しました: {error}
-          </p>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-red-700 text-sm font-medium">
+              データの取得に失敗しました
+            </p>
+            <p className="text-red-600 text-xs mt-1">{error}</p>
+          </div>
         )}
 
         {!loading && !error && (
